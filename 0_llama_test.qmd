@@ -3,4 +3,27 @@ title: "OpenAI"
 format: html
 ---
 
-## Quarto
+
+## connect to model and check
+
+```{r}
+# remotes::install_github("irudnyts/openai", ref = "r6")
+
+model_endpoint <- Sys.getenv("M_EP")
+
+library(openai)
+client <- openai::OpenAI(base_url = model_endpoint)
+
+
+
+completion <- client$chat$completions$create(
+    model = "llama3.1:405b",
+    messages = list(list("role" = "user", "content" = "Is it warm in february in Stockholm"))
+) 
+
+res <- completion$choices[[1]]$message$content
+
+cat(res)
+
+
+```
